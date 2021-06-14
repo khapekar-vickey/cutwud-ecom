@@ -1,0 +1,4 @@
+.wpum_settingspage {border: 5px solid #efb6b6;border-radius: 10px;box-shadow: 0 0 3px #ccc;margin: 30px auto;padding: 20px;width: 95%;font-size: 14px; height:auto; margin-bottom: 10px; display: block;}
+/*#wpum_submit, #mobileOtp, #verify, #resend{display: none;}*/
+#wpum_submit,div#verifyotpshow{display: none;}
+div#verifyotpshow.showdiv{display: block;margin: 15px 0px;}

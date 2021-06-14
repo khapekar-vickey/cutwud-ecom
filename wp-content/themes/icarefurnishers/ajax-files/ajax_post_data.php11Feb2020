@@ -1,0 +1,95 @@
+<?php
+
+require_once('../../../../wp-load.php');
+
+global $wpdb;	  
+$user_id = get_current_user_id();
+$date = date('Y-m-d H:i:s');
+if(isset($_POST['action'])=='crispshop_add_cart')
+{
+	global $woocommerce, $wpdb;
+	$productID =$_POST['product_id'];
+	$productPrice =$_POST['product_price'];
+	$variationID="";
+	$quantity=1;
+
+		$selected_attrString="";
+		foreach ($_POST['product_attr'] as $key => $value) 
+		{
+		  # code...
+		  $selected_attrString .=$key."=";
+		  foreach ($value as $keys => $values) 
+		  {
+		    # code...
+		    $selected_attrString .=$values."_";
+		  }
+		    $selected_attrString = rtrim($selected_attrString,'_');
+		    $selected_attrString .= "&";
+
+		}
+
+		$selected_attrString = rtrim($selected_attrString,'&');
+
+		$imageAPiURl= "https://image.icarefurnishers.com/api/Image/Getimage?sku=demo&";
+		$my_img = $imageAPiURl.$selected_attrString;
+		$mypic = '<a href="'.$my_img.'" target="_blank"><img style="width:150px;" class="mypic" data-imdid="'.$productID.'" src="'.$my_img.'"></a>';
+
+		$product_arr = array(
+                            'Product-Image'  => $mypic,
+                            'Selected-Attributes'  => $selected_attrString,
+                            'Product-Price'  => $productPrice,
+                );
+
+
+		$cartCount =WC()->cart->get_cart_contents_count();
+     
+     if($woocommerce->cart->get_cart() && $cartCount>0)
+     {
+           foreach ( $woocommerce->cart->get_cart() as $cart_item_key => $cart_item ) 
+           {
+                 
+
+                if( ($cart_item_key && $cart_item['product_id'] == $productID))
+                   {
+                          
+                            WC()->cart->set_quantity($cart_item_key,1);
+
+                    }else{
+                           WC()->cart->add_to_cart($productID,$quantity,$variationID,$product_arr);
+                       //WC()->cart->add_to_cart($prodFrameID,$quantity);
+                    }   
+          }
+
+    }else{
+      //echo '*************';
+
+      WC()->cart->add_to_cart($productID,$quantity,$variationID,$product_arr);
+      //WC()->cart->add_to_cart($prodFrameID,$quantity);
+    }
+                   
+      echo '<a href="'.home_url('/cart/').'">View Cart</a>';
+      //echo '<script>window.location.href="'.home_url('/cart/').'"</script>'; 
+		die;
+}	
+
+if(isset($_POST['action2'])=='getproductimages')
+{
+		$selected_attrString="";
+		foreach ($_POST['product_attr'] as $key => $value) 
+		{
+		  # code...
+		  $selected_attrString .=$key."=";
+		  foreach ($value as $keys => $values) 
+		  {
+		    # code...
+		    $selected_attrString .=$values."_";
+		  }
+		    $selected_attrString = rtrim($selected_attrString,'_');
+		    $selected_attrString .= "&";
+
+		}
+
+		echo $selected_attrString = rtrim($selected_attrString,'&');
+		die;
+}	    
+?>

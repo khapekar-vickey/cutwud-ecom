@@ -1,0 +1,49 @@
+#wpumimage-preview-wrapper{
+    text-decoration: none;border: 1px solid; text-align: center;padding: 25px 0 0;
+}
+
+#wpumimage-preview-wrapper a.Removewpumicon .fa {
+  border: 1px solid #ff0000;
+  border-radius: 50%;
+  color: #ff0000;
+  cursor: pointer;
+  font-size: 12px;
+  height: 22px;
+  margin: 0;
+  padding: 4px 0 0 1px;
+  text-align: center;
+  width: 22px;
+}
+#wpumimage-preview-wrapper  #wpum_imagepreview{border: 1px solid; height: 80px;}
+#wpumimage-preview-wrapper .fa {
+    display: inline-block;
+    font-family: FontAwesome;
+    font-feature-settings: normal;
+    font-kerning: auto;
+    font-language-override: normal;
+    font-size: inherit;
+    font-size-adjust: none;
+    font-stretch: normal;
+    font-style: normal;
+    font-synthesis: weight style;
+    font-variant: normal;
+    font-weight: normal;
+    line-height: 1;
+    text-rendering: auto;
+}
+#wpumcopydata{ height: 105px;padding: 10px;width: 660px;}
+#wpumcopyshortcode, #wpumcopyshortcode1{ height: 40px; width: 250px }
+.wpum_imagepreviewBox {
+  margin: 0 auto;
+  position: relative;
+  width: 150px;
+}
+.wpum_imagepreviewBox .Removewpumicon {
+  background: #fff none repeat scroll 0 0;
+  border-radius: 50%;
+  height: 25px;
+  position: absolute;
+  right: 20px;
+  top: -13px;
+  width: 25px;
+}

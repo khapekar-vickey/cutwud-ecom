@@ -1,0 +1,72 @@
+
+/* CSS Document */
+body {background: url(../images/login-bg.jpg) no-repeat; background-size: 100% auto;}
+#login {padding-top: 0; position: relative; top: 15%; background: rgba(0,0,0,0.6);}
+.login h1 {padding: 5px 5px 0px; background: #ffffff;}
+/*.login h1 a {background: url(../images/login-logo.png) no-repeat 0 0; height: 183px; margin-bottom: -120px; position: relative;}*/
+.login h1 a {background: url("../images/footer-logo.png") no-repeat scroll center center / cover; max-width: 100%; height: 65px; margin-bottom: 0; position: relative; background-size: 100% auto; top: -3px; width: 270px; outline: none;}
+.login.login-action-resetpass .login #backtoblog {position: relative; top: 120px;}
+
+.login #backtoblog, .login #nav {background: rgba(0,0,0,0.6);}
+.login form {padding-top: 30px; padding-bottom: 25px; border-radius: 0; margin-top: 0; background: transparent; border: 0px;}
+.login form .input, .login form input[type="checkbox"], .login input[type="text"] {background:transparent; box-shadow: none; color: #fff; font-size: 14px; margin: 5px 0 10px 0; padding: 9px 15px; outline: 0 !important; box-shadow: none !important; border:1px solid #fff;}
+.login label {color: #fff; font-size: 14px; position: relative;}
+#login form p.submit {float: left;}
+.login form .forgetmenot label::before {display: none;}
+.login form .forgetmenot {float: right;}
+.wp-core-ui .button-group.button-large .button, .wp-core-ui .button.button-large {background-color: #0356ce; border-color: #0356ce; border-radius: 8px; color: #fff; font-size: 14px; padding: 6px 20px; text-transform: uppercase; font-weight: 600;  text-shadow: none; line-height: 20px; box-shadow: none;  height: 34px; border-radius: 2px;}
+.login form .forgetmenot, #login form p.submit {margin-top: 10px; }
+.login form .forgetmenot label {position: relative; padding-left: 0; font-size: 16px;}
+.login form#loginform .forgetmenot label:after {background: #2b1b4e none repeat scroll 0 0; content: ""; display: block; height: 16px; left: 0; opacity: 0.18; position: absolute; top: 3px; width: 16px; z-index: 99999999;}
+.login #backtoblog a, .login #nav a {color: #fff; /*text-shadow: 0 1px 0 #424242;*/ margin: 0 !important; height: auto; min-height: 24px;}
+.login #backtoblog a:hover, .login #nav a:hover, a {color: #007aa0;}
+.login #login_error, .login .message {position: relative; top: 40px; border: 0; box-shadow: none; padding-left: 25px; margin-bottom: 0; background: #cecde0;}
+.login form .forgetmenot input[type="checkbox"] {display: inline-block; margin-top: 9px; -webkit-appearance: none; -moz-appearance: none; appearance: none; border-radius: 0;}
+
+@media (max-width:860px) {
+	body {padding-bottom:180px;}
+	body:before {left: 0; right: 0; margin: 0px auto;}
+	.login form input[type="checkbox"] {background: none;}
+}
+@media (max-width:640px) {
+	#login > p#backtoblog {padding-bottom: 47%;}
+	.login form input[type="checkbox"] {background: none;}
+	#login #backtoblog, #login #nav {padding: 0 10px 0 !important;}
+}
+.login #login_error {background-color: transparent !important; color: #ec3f41;}
+#login #nav {display: inline-block;}
+#login #nav a {line-height: 20px; margin-bottom: 7px; height: 22px;}
+#login #nav a {float: left;}
+
+#login #nav {padding: 0px;}
+#backtoblog {display: block; margin: 0px auto; padding: 0px !important;}
+#backtoblog a {display: inline-block; margin: 0px auto;}
+
+body.login-action-rp #pass-strength-result, #login form p.description.indicator-hint {
+    display: none !important;
+}
+body.login-action-rp #pass1,
+body.login-action-rp #pass1-text {
+    border-color: rgb(221,221,221) !important;
+}
+.login.login-action-resetpass #pass-strength-result {
+    display: none !important;
+}
+
+.login.login-action-resetpass #backtoblog {
+    position: relative;
+    top: 120px !important;
+}
+.login #backtoblog, .login #nav {
+    background: rgba(0,0,0,0.8);
+    display: inline-flex;
+    float: left;
+    margin: 0;
+    width: 50%;
+    padding: 12px 10px !important;
+    box-sizing: border-box;
+    color: #fff;
+}
+.login .button.wp-hide-pw {margin-top: 5px;}
+.login .button.wp-hide-pw button, .login .button.wp-hide-pw button:focus {outline: none;}
+.login .button.wp-hide-pw .dashicons {color: #fff;}

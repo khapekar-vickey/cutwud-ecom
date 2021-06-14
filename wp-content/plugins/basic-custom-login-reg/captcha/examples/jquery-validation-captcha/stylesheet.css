@@ -1,0 +1,12 @@
+﻿.captcha_input.BDC_CaptchaDiv {
+  margin: 3px; border: 1px solid #ccc !important;
+}
+
+.captcha_input .textbox {
+  width: 173px;
+	margin-top: 3px !important;
+}
+
+.warning {
+  color: Red;
+}

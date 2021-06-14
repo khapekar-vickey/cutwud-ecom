@@ -1,0 +1,246 @@
+<?php
+/**
+ * Template Name: Product Customize
+ *
+ *
+ */
+get_header();
+if (!is_user_logged_in() ){
+        //wp_redirect("/login/");
+        echo '<script>window.location.href="'.home_url('/login/').'"</script>';
+    exit;
+        } 
+global $post;
+$porudctId=  isset($_GET['pid']) ? $_GET['pid'] : '';
+
+?>
+
+	<div id="primary" class="content-area">
+		<main id="main" class="site-main" role="main">
+			<h2><?=get_the_title($porudctId);?></h2>
+  
+      <!--Carousel Wrapper-->
+<div class="slider-container">
+    <div id="slider" class="slider owl-carousel">
+    <div class="item">
+    <div class="content">
+    <img id="slidermain_img" src="https://mdbootstrap.com/img/Photos/Others/Carousel-thumbs/img%20(121).jpg" class="img-responsive">
+    </div>
+    </div>
+    </div>
+</div>
+    
+    <!--/.Carousel Wrapper-->
+      <div class="thumbnail-slider-container">
+      <div id="thumbnailSlider" class="thumbnail-slider owl-carousel">
+      <div class="item">
+      <div class="content">
+      <img src="https://mdbootstrap.com/img/Photos/Others/Carousel-thumbs/img%20(31).jpg" class="img-responsive">
+      </div>
+      </div>
+      <div class="item">
+      <div class="content">
+      <img src="https://mdbootstrap.com/img/Photos/Others/Carousel-thumbs/img%20(88).jpg" class="img-responsive">
+      </div>
+      </div>
+      <div class="item">
+      <div class="content">
+      <img src="https://mdbootstrap.com/img/Photos/Others/Carousel-thumbs/img%20(121).jpg" class="img-responsive">
+      </div>
+      </div>
+      <div class="item">
+      <div class="content">
+      <img src="https://mdbootstrap.com/img/Photos/Others/Carousel-thumbs/img%20(88).jpg" class="img-responsive">
+      </div>
+      </div>
+      <div class="item">
+      <div class="content">
+      <img src="https://mdbootstrap.com/img/Photos/Others/Carousel-thumbs/img%20(88).jpg" class="img-responsive">
+      </div>
+      </div>
+      <div class="item">
+      <div class="content">
+      <img src="https://mdbootstrap.com/img/Photos/Others/Carousel-thumbs/img%20(88).jpg" class="img-responsive">
+      </div>
+      </div>
+      <div class="item">
+      <div class="content">
+      <img src="https://mdbootstrap.com/img/Photos/Others/Carousel-thumbs/img%20(88).jpg" class="img-responsive">
+      </div>
+      </div>
+      <div class="item">
+      <div class="content">
+      <img src="https://mdbootstrap.com/img/Photos/Others/Carousel-thumbs/img%20(88).jpg" class="img-responsive">
+      </div>
+      </div>
+      </div>
+      </div>
+
+<!--/.Carousel Wrapper end-->
+			<?php
+    
+			while ( have_posts() ) : the_post();
+
+           ?>
+            <div class="col-sm-4">
+            	<h3>Layout</h3>
+            	<?php
+
+          // $attrname='pa_size';
+            //$estado_values = get_the_terms( $porudctId,$attrname);
+           // print_r($estado_values);
+           dkcw_woo_attribute($porudctId);
+?>
+            </div>
+            <form name="getproduct" id="getproduct" action="" method="post">
+            <div class="col-sm-8">
+              <div class="framing-option-outer">
+                <div class="pricessect">
+                  <h2 style="text-align:center" id="mce_0">Options</h2>
+                  <div class="framing-slider">
+                    <div>
+      <?php
+          $frm=0;
+          $attr = get_post_meta($porudctId,'_product_attributes',true);
+          if(count( $attr)>0 && $porudctId!="")
+          {
+            //print_r($attr);
+            ?>
+    <form name="getproduct" id="getproduct" action="" method="post">
+      <?php
+            
+          $termlist ='<ul>';
+          foreach ($attr as $key => $value)
+          {# code...
+           
+              $termlist .='<a name="'.$key.'">&nbsp;</a><h3>'.ucwords(str_replace("pa_"," ",$key)).'</h3>';
+              // Query arguments.
+              $args = array();
+              //$result = wc_get_product_terms($product_id, $taxonomy, $args); 
+              $pterms = wc_get_product_terms($porudctId, $key, $args);
+              //print_r($pterms);
+                foreach ($pterms as $key1 => $term)
+                {
+                # code...
+
+                  // Get term by name ''news'' in Tags taxonomy.
+                  $tag = get_term_by('slug', $term->slug, $key);
+                  // print_r($tag);
+                  $term_id = $tag->term_id;
+                  $allTermImg="";
+                  $term_image = get_term_meta( $term_id, 'color_image', true);
+                  $term_image_src = wp_get_attachment_image_src($term_image, 'thumbnail' );
+                  $termlist .='<li id="term_id'.$term->term_id.'">';
+
+                  $termlist .='<img id="frameimage'.$term_id.'" src="'.$term_image_src[0].'" alt="'.$_subjectFrm.'" /><a class="previewFramImg" id="'.$term_id.'" href="javascript:void(0)"><i class="fa fa-eye" aria-hidden="true"></i></a>';
+
+                $termlist .='<li id="term_id'.$term->term_id.'"><input type="checkbox" name="product_attr['.trim($key).'][]" class="term_list" id="term_list'.$term->term_id.'"  value="'.$term->slug.'" />'.ucwords(str_replace("_"," ",$term->name)).'</a></li>';
+                }
+          }
+
+          $termlist .='</ul>';
+          echo $termlist;
+      }//end if
+              ?>
+              <input type="submit" name="getproduct_data" id="getproduct_data" value="Get Data">
+    </form>
+
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </form>
+           <?php
+
+          
+
+			endwhile; // End of the loop.
+			?>
+
+		</main><!-- #main -->
+	</div><!-- #primary -->
+	
+</div>
+<style type="text/css">
+.slider-container{
+position: relative;
+display: block;
+width: 700px;
+margin: 0 auto;
+}
+.slider .content{
+width: 100%;
+height: 410px;
+margin: 0 auto;
+}
+
+#slidermain_img {
+width: 100%;
+height: 400px;
+}
+
+.thumbnail-slider-container{
+margin-top: 5px;
+width: 700px;
+margin: 0 auto;
+}
+.thumbnail-slider .content{
+padding:5px;
+}
+.thumbnail-slider .owl-item.active.center{
+border: 3px solid #333333;
+}
+</style>
+<?php
+get_footer();
+?>
+
+<!--Latest jQuery-->
+<script type="text/javascript" src="http://demo.nstechframe.com/assets/js/jquery-2.2.0.min.js"></script>
+<script type="text/javascript">
+jQuery(document).ready(function () 
+{
+    jQuery.noConflict();
+    // reference for main items
+    var slider = $('#slider');
+    // reference for thumbnail items
+    var thumbnailSlider = $('#thumbnailSlider');
+    //transition time in ms
+    var duration = 550;
+    // carousel function for main slider
+slider.owlCarousel({
+            loop:true,
+            nav:false,
+            items:1
+            });
+
+// carousel function for thumbnail slider
+thumbnailSlider.owlCarousel({
+      loop:true,
+      center:true, //to display the thumbnail item in center
+      nav:true,
+      responsive:{
+                0:{
+                items:3
+                },
+                600:{
+                items:4
+                },
+                1000:{
+                items:5
+                }
+          }
+}).on('click', '.owl-item img', function () 
+{
+// On click of thumbnail items to trigger same main item
+//slider.trigger('to.owl.carousel', [$(this).index(), duration, true]);
+var src = jQuery(this).attr('src');
+//alert(src);
+jQuery("#slider img").attr('src',src);
+
+});
+
+
+});
+</script>

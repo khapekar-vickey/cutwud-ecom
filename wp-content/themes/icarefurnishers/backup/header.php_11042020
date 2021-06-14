@@ -1,0 +1,416 @@
+<?php
+/**
+ * The header for our theme
+ *
+ * This is the template that displays all of the <head> section and everything up until <div id="content">
+ *
+ * @link https://developer.wordpress.org/themes/basics/template-files/#template-partials
+ *
+ * @package icarefurnishers
+ */
+
+?>
+<!doctype html>
+<html <?php language_attributes(); ?>>
+<head>
+	<meta charset="<?php bloginfo( 'charset' ); ?>">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="profile" href="https://gmpg.org/xfn/11">
+	<link href="https://fonts.googleapis.com/css?family=Open+Sans:400,600,700&display=swap" rel="stylesheet">
+	<!-- font-family: 'Open Sans', sans-serif; --> 
+	<link href="https://fonts.googleapis.com/css?family=Roboto:400,500,700,900&display=swap" rel="stylesheet">
+	<!-- font-family: 'Roboto', sans-serif; --> 
+<?php wp_head(); ?>
+	<!-- Bootstrap -->   
+    <link href="<?php echo get_stylesheet_directory_uri(); ?>/images/favicon.png" rel="shortcut icon" type="image/x-icon" /> 
+    <link href="<?php echo get_stylesheet_directory_uri(); ?>/css/owl.carousel.css" rel="stylesheet">
+    <link href="<?php echo get_stylesheet_directory_uri(); ?>/css/owl.theme.default.css" rel="stylesheet">
+    <link href="<?php echo get_stylesheet_directory_uri(); ?>/css/bootstrap.min.css" rel="stylesheet">
+    <link href="<?php echo get_stylesheet_directory_uri(); ?>/css/font-awesome.css" rel="stylesheet">
+    <link href="<?php echo get_stylesheet_directory_uri(); ?>/css/custom.css" rel="stylesheet">
+
+<script src="<?php echo get_stylesheet_directory_uri(); ?>/js/jquery.min.js"></script>
+<script src="<?php echo get_stylesheet_directory_uri(); ?>/js/bootstrap.min.js"></script>
+<script src="<?php echo get_template_directory_uri();?>/OwlCarousel2-2.3.4/dist/owl.carousel.min.js">
+</script>
+<script src="<?php echo get_stylesheet_directory_uri(); ?>/js/custom.js"></script>
+
+	
+</head>
+
+<body <?php body_class(); ?>>
+<div id="page" class="site">
+	<header class="header">
+		<div class="header-top">
+			<div class="container">
+                <div class="row">
+                    <div class="col-sm-6">
+                    	<span class="offer-lbl">Latest Offers</span>
+                    	<ul class="ticker">
+                    		<li><a href="#">20% Flat Discount</a></li>
+                    	</ul>
+                    </div>
+                    <div class="col-sm-6">
+                    	<div class="account-wrap">
+							<div class="top-mob">
+								<a href="tel:<?php $content_mod = get_theme_mod('header_phone_number'); echo $content_mod;?>"><i class="fa fa-phone"></i>
+								<?php
+	                                $content_mod = get_theme_mod('header_phone_number');
+	                                echo $content_mod;?>
+								</a>
+							</div>
+							<div class="header-cart">
+								<!-- <a class="cart-content" href="https://icarefurnishers.com/cart/" title="View your shopping cart"> -->
+								<!--a class="cart-content" href="<?php echo esc_url( wc_get_cart_url() ); ?>" title="<?php esc_attr_e( 'View your shopping cart', 'icarefurnishers' ); ?>">
+									<div class="count">
+										<i class="fa fa-shopping-bag"></i>
+										<span class="cart-count"><?php echo wp_kses_data(/* translators: Cart Item */ sprintf( _n( '%s Item', '%s Items', WC()->cart->get_cart_contents_count(), 'icarefurnishers' ), WC()->cart->get_cart_contents_count() ) ); ?></span>
+										<span class="cart-total"><?php echo wp_kses_data( WC()->cart->get_cart_total() ) ; ?></span>
+									</div>	               	
+								</a-->
+							</div>
+							<div class="my-account">
+								<!-- <a href="https://icarefurnishers.com/my-account/">
+									<i class="fa fa-user"></i>
+									<span>My Account</span>
+								</a> -->
+								<a href="<?php echo esc_url(get_permalink( get_option('woocommerce_myaccount_page_id') )); ?>">
+										<i class="fa fa-user"></i>
+										<span><?php esc_html_e('My Account','icarefurnishers');?></span>
+									</a>
+							</div>
+							<div class="user-login">
+									<?php
+									//if user is logged in
+									if(is_user_logged_in()){
+										global $current_user;
+										wp_get_current_user();
+										?>						
+										<a href="<?php echo esc_url(wp_logout_url( get_permalink( wc_get_page_id( 'my-account' ) ) ) ); ?>" class="logout">
+											<i class="fa fa-sign-out "></i>
+											<?php esc_html_e('Logout','icarefurnishers'); ?>
+										</a>
+										<?php
+									} else{
+										?>
+
+									<!-- <a href="<?php echo esc_url(get_permalink( get_option('woocommerce_myaccount_page_id') )); ?>" class="login"> -->
+
+										<!-- <a href="#" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">Login</a> -->
+										<a href="javascript:void(0)" class="login loginSignup loginboxtop" data-toggle="modal" data-target="#loginForm1">
+											<i class="fa fa-sign-in"></i>
+											<?php esc_html_e('Login','icarefurnishers'); ?>
+										</a>
+
+										<a href="javascript:void(0)" class="login loginSignup signupboxtop">
+											<i class="fa fa-sign-in"></i>
+											<?php esc_html_e('Signup','icarefurnishers'); ?>
+										</a>
+										<?php 
+									}
+									?>
+								</div>
+								
+								<a class="btn-sm text-white btn-primary mr-1" style="font-size: 11px; cursor: pointer;" data-toggle="modal" data-target="#loginForm"> Test Login</a>
+								<a class="btn-sm text-white btn-info" style="font-size: 11px; cursor: pointer;" data-toggle="modal" data-target="#registrationForm"> Test Signup</a>
+						</div>
+                    </div>
+				</div>
+			</div>
+		</div>
+
+		<div class="buttom-header">
+			<div class="container">
+				<div class="header-logo-warapper">
+					<div class="site-logo">
+			            <a href="<?php echo esc_url( home_url( '/' ) ); ?>"><img src="<?php echo get_theme_mod('header_logo_upload'); ?>"></a>
+			        </div>
+			        <div class="wrap-right">
+						<!--div class="header-call-to">
+							<p>Call US Now</p>
+							
+							<a href="tel:<?php $content_mod = get_theme_mod('header_phone_number'); echo $content_mod;?>"><i class="fa fa-mobile"></i>
+								<?php
+	                                $content_mod = get_theme_mod('header_phone_number');
+	                                echo $content_mod;?></a>
+						</div-->	
+						<div class="header-cart">
+							<a class="cart-content" href="<?php echo esc_url( wc_get_cart_url() ); ?>" title="<?php esc_attr_e( 'View your shopping cart', 'icarefurnishers' ); ?>">
+								<div class="count">
+									<i class="fa fa-shopping-cart"></i>
+									<span class="cart-count"><?php echo wp_kses_data(/* translators: Cart Item */ sprintf( _n( '%s Item', '%s', WC()->cart->get_cart_contents_count(), 'icarefurnishers' ), WC()->cart->get_cart_contents_count() ) ); ?></span><br />
+									<span class="cart-total"><?php echo wp_kses_data( WC()->cart->get_cart_total() ) ; ?></span>
+								</div>	               	
+							</a>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+        <div class="wrap-header-nav">
+        	<div class="container">
+        		<div class="row">
+        			<div class="col-md-11">
+        				<div class="header-menu">
+                            <?php quadmenu(array("theme_location" => "menu-1", "theme" => "default_theme")); ?>
+                        </div>
+        			</div>
+        			<div class="">
+        				<div class="header-search">
+	                        <div class="searching">
+	                           <center>
+	                                <a href="javascript:void(0)" class="search-open">
+	                                <i class="fa fa-search"></i>
+	                            </a>
+	                           </center>
+	                            <div class="search-inline" style="display: none;">
+
+									<form role="search" method="get" id="searchform" action="<?php echo home_url( '/' );?>" >
+
+											<input type="text" value="<?php echo get_search_query();?>" name="s" id="s" class="form-control search-in" placeholder="Type Keyword..." aria-label="Recipient's username" aria-describedby="basic-addon2">
+											<div class="input-group-append">
+											<button class="btn btn-outline-secondary" type="submit">Search</button>
+											</div>
+											<a href="javascript:void(0)" class="search-close">
+											<i class="fa fa-times"></i>
+											</a>
+									</form>
+	                               
+	                            </div>
+	                        </div>
+	                    </div>
+        			</div>
+        		</div>
+        	</div>
+        </div>
+
+    </header>
+	
+
+
+
+<!-- The Modal Login Popup -->
+<div class="modal" id="loginForm">
+	<div class="modal-dialog">
+	  <div class="modal-content">
+		<!-- Modal Header -->
+		<div class="modal-header">
+		  <h4 class="modal-title">Login</h4>
+		  <button type="button" class="close" data-dismiss="modal">&times;</button>
+		</div>
+		
+		<!-- Modal body -->
+		<div class="modal-body">
+			<div class="loginFields">
+				<span class="checkbox">
+					<div>Don't have an account? Please <a href="https://icarefurnishers.com/registration/">register</a> here. <br> </div>
+				</span>
+			  	<form action="" method="post" name="wpum_login" id="wpum_login" autocomplete="off">
+                    <input type="hidden" name="wpum_loginaction" value="wpum_loginaction">
+                        <div class="row">
+                            <div class="col-sm-12">
+                            <div class="form-group">
+                            <label for="username">Username/Email<span class="starvalid"> *</span></label>
+                                <input value="" class="form-control" id="username" name="username" type="text" required="">
+                            </div>
+                        </div>
+                    </div>
+                        <div class="row">
+                            <div class="col-sm-12">
+                            <div class="form-group">
+                            <label for="password">Password <span class="starvalid">* </span></label><input value="" class="form-control" name="password" id="password" type="password" required=""> </div>
+                        </div>
+                    </div>
+                    <div class="submit">
+                            <span class="checkbox reg">
+                            <input type="checkbox" value="forever" name="rememberme"> Remember Me | <a href="https://icarefurnishers.com/my-account/lost-password/">Forgot password?</a>
+                            </span>
+                        <input type="submit" name="next" class="btn btn-primary" value="Submit">
+                        <span class="checkbox">
+                    <div><br>Don't have an account? Please 
+                        <!-- <a href="https://icarefurnishers.com/registration/"> --><a href="javascript:void(0)" class="signupboxtop">register</a> here.</div>
+                    </span>
+                    </div>
+
+                </form>
+			</div>
+		</div>
+		
+		<!-- Modal footer -->
+		<div class="modal-footer">
+		  <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+		</div>
+		
+	  </div>
+	</div>
+</div>
+<!-- End Login Popup -->	
+	
+	
+	
+<!-- The Modal Registration Popup -->
+<div class="modal" id="registrationForm">
+	<div class="modal-dialog">
+	  <div class="modal-content">
+		<!-- Modal Header -->
+		<div class="modal-header">
+		  <h4 class="modal-title">Registration</h4>
+		  <button type="button" class="close" data-dismiss="modal">&times;</button>
+		</div>
+		
+		<!-- Modal body -->
+		<div class="modal-body">
+			<div class="registrationFields">
+			  	<div class="row">
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <label for="firstname">First Name
+                                <span class="starvalid"> *</span>
+                            </label>
+                            <input name="first_name" id="first_name" class="form-control" pattern="[a-zA-Z][a-zA-Z ]*" value="" required="">
+                        </div>
+                    </div>
+
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <label for="last_name">Last Name
+                                <span class="starvalid"> *</span>
+                            </label>
+                            <input name="last_name" id="last_name" class="form-control" pattern="^[a-zA-Z0-9]+$" value="" required="">
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <label for="user_login">User Name
+                                <span class="starvalid"> *</span>
+                            </label>
+                            <input name="user_login" id="user_login" class="form-control" value="" required="">
+                        </div>
+                    </div>
+
+
+                    
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <label for="email">Email Address<span class="starvalid"> *</span></label>
+                            <input type="email" name="user_email" value="" id="user_email" class="form-control" required="">
+                            <div id="check-email"></div>
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <label for="pass1">Password
+                                <span class="starvalid"> *</span>
+                            </label>
+                            <input type="password" name="pass1" id="pass1" class="form-control" length="[6, 15]" required="">
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <label for="pass2">Confirm Password
+                                <span class="starvalid"> *</span>
+                            </label>
+                            <input type="password" name="pass2" id="pass2" class="form-control">
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <label for="phoneno">Phone Number</label>
+                            <input placeholder="Enter the 10 digit mobile" type="text" id="phoneno" name="phoneno" class="form-control" value="" data-parsley-pattern="^\s*(?:\+?(\d{1,3}))?[-. (]*(\d{3})[-. )]*(\d{3})[-. ]*(\d{4})(?: *x(\d+))?\s*$">
+
+                                                                       <a href="javascript:void(0)" id="SendVerification" class="btnSubmit" onclick="sendOTP();">Send Verification code.</a>
+                                    
+                                    <div class="form-row" id="verifyotpshow">
+                                    <input type="number" id="mobileOtp" class="form-input" placeholder="Enter the OTP">
+                                    <a href="javascript:void(0)" id="verify" class="btnVerify" onclick="verifyOTP();">Verify</a> &nbsp;
+                                    <a href="javascript:void(0)" class="btnSubmit" onclick="sendOTP();">Resend.</a>                                      
+                                    </div>
+
+                                    <div class="merror"></div>
+                                    <div class="mcontainer"></div>
+                                                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <label for="b-address">Address</label>
+                        <input type="text" id="user_address" name="user_address" class="form-control" value="">
+                    </div>
+                </div>
+                <!-- Country city select box -->
+                <div class="row">
+                    <div class="col-md-4 col-sm-12">
+                        <div class="form-group">
+                        <label for="user_country">Country
+                                <span class="starvalid"> *</span>
+                            </label>
+                    <select required="required" name="user_country" id="user_country" class="regular-text">
+                    <option value="">Select County</option><option value="1">Afghanistan</option><option value="2">Albania</option><option value="3">Algeria</option><option value="4">American Samoa</option><option value="5">Andorra</option><option value="6">Angola</option><option value="7">Anguilla</option><option value="8">Antarctica</option><option value="9">Antigua And Barbuda</option><option value="10">Argentina</option><option value="11">Armenia</option><option value="12">Aruba</option><option value="13">Australia</option><option value="14">Austria</option><option value="15">Azerbaijan</option><option value="16">Bahamas The</option><option value="17">Bahrain</option><option value="18">Bangladesh</option><option value="19">Barbados</option><option value="20">Belarus</option><option value="21">Belgium</option><option value="22">Belize</option><option value="23">Benin</option><option value="24">Bermuda</option><option value="25">Bhutan</option><option value="26">Bolivia</option><option value="27">Bosnia and Herzegovina</option><option value="28">Botswana</option><option value="29">Bouvet Island</option><option value="30">Brazil</option><option value="31">British Indian Ocean Territory</option><option value="32">Brunei</option><option value="33">Bulgaria</option><option value="34">Burkina Faso</option><option value="35">Burundi</option><option value="36">Cambodia</option><option value="37">Cameroon</option><option value="38">Canada</option><option value="39">Cape Verde</option><option value="40">Cayman Islands</option><option value="41">Central African Republic</option><option value="42">Chad</option><option value="43">Chile</option><option value="44">China</option><option value="45">Christmas Island</option><option value="46">Cocos (Keeling) Islands</option><option value="47">Colombia</option><option value="48">Comoros</option><option value="49">Congo</option><option value="50">Congo The Democratic Republic Of The</option><option value="51">Cook Islands</option><option value="52">Costa Rica</option><option value="53">Cote D'Ivoire (Ivory Coast)</option><option value="54">Croatia (Hrvatska)</option><option value="55">Cuba</option><option value="56">Cyprus</option><option value="57">Czech Republic</option><option value="58">Denmark</option><option value="59">Djibouti</option><option value="60">Dominica</option><option value="61">Dominican Republic</option><option value="62">East Timor</option><option value="63">Ecuador</option><option value="64">Egypt</option><option value="65">El Salvador</option><option value="66">Equatorial Guinea</option><option value="67">Eritrea</option><option value="68">Estonia</option><option value="69">Ethiopia</option><option value="70">External Territories of Australia</option><option value="71">Falkland Islands</option><option value="72">Faroe Islands</option><option value="73">Fiji Islands</option><option value="74">Finland</option><option value="75">France</option><option value="76">French Guiana</option><option value="77">French Polynesia</option><option value="78">French Southern Territories</option><option value="79">Gabon</option><option value="80">Gambia The</option><option value="81">Georgia</option><option value="82">Germany</option><option value="83">Ghana</option><option value="84">Gibraltar</option><option value="85">Greece</option><option value="86">Greenland</option><option value="87">Grenada</option><option value="88">Guadeloupe</option><option value="89">Guam</option><option value="90">Guatemala</option><option value="91">Guernsey and Alderney</option><option value="92">Guinea</option><option value="93">Guinea-Bissau</option><option value="94">Guyana</option><option value="95">Haiti</option><option value="96">Heard and McDonald Islands</option><option value="97">Honduras</option><option value="98">Hong Kong S.A.R.</option><option value="99">Hungary</option><option value="100">Iceland</option><option value="101">India</option><option value="102">Indonesia</option><option value="103">Iran</option><option value="104">Iraq</option><option value="105">Ireland</option><option value="106">Israel</option><option value="107">Italy</option><option value="108">Jamaica</option><option value="109">Japan</option><option value="110">Jersey</option><option value="111">Jordan</option><option value="112">Kazakhstan</option><option value="113">Kenya</option><option value="114">Kiribati</option><option value="115">Korea North</option><option value="116">Korea South</option><option value="117">Kuwait</option><option value="118">Kyrgyzstan</option><option value="119">Laos</option><option value="120">Latvia</option><option value="121">Lebanon</option><option value="122">Lesotho</option><option value="123">Liberia</option><option value="124">Libya</option><option value="125">Liechtenstein</option><option value="126">Lithuania</option><option value="127">Luxembourg</option><option value="128">Macau S.A.R.</option><option value="129">Macedonia</option><option value="130">Madagascar</option><option value="131">Malawi</option><option value="132">Malaysia</option><option value="133">Maldives</option><option value="134">Mali</option><option value="135">Malta</option><option value="136">Man (Isle of)</option><option value="137">Marshall Islands</option><option value="138">Martinique</option><option value="139">Mauritania</option><option value="140">Mauritius</option><option value="141">Mayotte</option><option value="142">Mexico</option><option value="143">Micronesia</option><option value="144">Moldova</option><option value="145">Monaco</option><option value="146">Mongolia</option><option value="147">Montserrat</option><option value="148">Morocco</option><option value="149">Mozambique</option><option value="150">Myanmar</option><option value="151">Namibia</option><option value="152">Nauru</option><option value="153">Nepal</option><option value="154">Netherlands Antilles</option><option value="155">Netherlands The</option><option value="156">New Caledonia</option><option value="157">New Zealand</option><option value="158">Nicaragua</option><option value="159">Niger</option><option value="160">Nigeria</option><option value="161">Niue</option><option value="162">Norfolk Island</option><option value="163">Northern Mariana Islands</option><option value="164">Norway</option><option value="165">Oman</option><option value="166">Pakistan</option><option value="167">Palau</option><option value="168">Palestinian Territory Occupied</option><option value="169">Panama</option><option value="170">Papua new Guinea</option><option value="171">Paraguay</option><option value="172">Peru</option><option value="173">Philippines</option><option value="174">Pitcairn Island</option><option value="175">Poland</option><option value="176">Portugal</option><option value="177">Puerto Rico</option><option value="178">Qatar</option><option value="179">Reunion</option><option value="180">Romania</option><option value="181">Russia</option><option value="182">Rwanda</option><option value="183">Saint Helena</option><option value="184">Saint Kitts And Nevis</option><option value="185">Saint Lucia</option><option value="186">Saint Pierre and Miquelon</option><option value="187">Saint Vincent And The Grenadines</option><option value="188">Samoa</option><option value="189">San Marino</option><option value="190">Sao Tome and Principe</option><option value="191">Saudi Arabia</option><option value="192">Senegal</option><option value="193">Serbia</option><option value="194">Seychelles</option><option value="195">Sierra Leone</option><option value="196">Singapore</option><option value="197">Slovakia</option><option value="198">Slovenia</option><option value="199">Smaller Territories of the UK</option><option value="200">Solomon Islands</option><option value="201">Somalia</option><option value="202">South Africa</option><option value="203">South Georgia</option><option value="204">South Sudan</option><option value="205">Spain</option><option value="206">Sri Lanka</option><option value="207">Sudan</option><option value="208">Suriname</option><option value="209">Svalbard And Jan Mayen Islands</option><option value="210">Swaziland</option><option value="211">Sweden</option><option value="212">Switzerland</option><option value="213">Syria</option><option value="214">Taiwan</option><option value="215">Tajikistan</option><option value="216">Tanzania</option><option value="217">Thailand</option><option value="218">Togo</option><option value="219">Tokelau</option><option value="220">Tonga</option><option value="221">Trinidad And Tobago</option><option value="222">Tunisia</option><option value="223">Turkey</option><option value="224">Turkmenistan</option><option value="225">Turks And Caicos Islands</option><option value="226">Tuvalu</option><option value="227">Uganda</option><option value="228">Ukraine</option><option value="229">United Arab Emirates</option><option selected="selected" value="230">United Kingdom</option><option value="231">United States</option><option value="232">United States Minor Outlying Islands</option><option value="233">Uruguay</option><option value="234">Uzbekistan</option><option value="235">Vanuatu</option><option value="236">Vatican City State (Holy See)</option><option value="237">Venezuela</option><option value="238">Vietnam</option><option value="239">Virgin Islands (British)</option><option value="240">Virgin Islands (US)</option><option value="241">Wallis And Futuna Islands</option><option value="242">Western Sahara</option><option value="243">Yemen</option><option value="244">Yugoslavia</option><option value="245">Zambia</option><option value="246">Zimbabwe</option>                    </select>
+                        </div>
+                    </div>
+                    <div class="col-md-4 col-sm-12">
+                        <div class="form-group">
+                        <label for="user_state">State
+                                <span class="starvalid"> *</span>
+                            </label>
+                        <select required="required" name="user_state" id="user_state" class="regular-text">
+                                                </select>
+                        </div>
+                    </div>
+                    <div class="col-md-4 col-sm-12">
+                        <div class="form-group">
+                         <label for="pass2">City
+                                <span class="starvalid"> *</span>
+                            </label>
+                            <select required="required" name="user_city" id="user_city" class="regular-text">
+                                                        </select>
+                        </div>
+                    </div>
+             
+                    <div class="col-md-4 col-sm-12">
+                        <div class="form-group">
+                            <label for="zipcode">Zip Code</label>
+                            <input type="text" id="zipcode" name="zipcode" length="[3, 8]" class="form-control" value="" title="Please enter between 3-8 alphanumeric Zipcode.">
+                        </div>
+                    </div>
+   				</div>
+                <!-- End country city select box -->
+                <div class="submit">
+				    <div class="row">
+				        <div class="col-sm-12">
+				            <span class="checkbox reg">
+				            <input type="checkbox" name="terms" title="Please check terms and policies" required=""> I agree the "<a href="https://icarefurnishers.com/terms-of-use/" target="_blank">Terms of Use</a>" and "<a href="https://icarefurnishers.com/privacy-policy/" target="_blank">Privacy Policy</a>" of the website. </span>
+				        </div>
+
+				  </div>
+				       <div class="row">
+				        <div class="col-sm-12 mb-2">
+				            <input type="submit" id="wpum_submit" name="wpum_submit" class="btn btn-primary" value="Submit">
+				            <input type="button" id="wpum_submitVerify" name="wpum_submit" class="btn btn-primary" value="Submit">
+				        </div>
+				    </div>
+				       <span class="checkbox"> Already have an account? Please 
+				        <!-- <a href="https://icarefurnishers.com/index.php/login/"> -->
+				            <a href="javascript:void(0)" class="loginboxtop">login</a> here.</span>
+
+				</div>
+			</div>
+		</div>
+		
+		<!-- Modal footer -->
+		<div class="modal-footer">
+		  <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+		</div>
+		
+	  </div>
+	</div>
+</div>
+<!-- End The Modal Registration Popup -->	
+
+
+
+
+	
+<?php echo do_shortcode("[DkHomepageSlider number='10' posttype='homepage_slider']"); ?>
+	<div id="content" class="site-content">

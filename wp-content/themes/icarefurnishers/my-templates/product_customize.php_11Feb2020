@@ -1,0 +1,298 @@
+<?php
+/**
+ * Template Name: Product Customize
+ *
+ *
+ */
+get_header();
+if (!is_user_logged_in() ){
+        //wp_redirect("/login/");
+        echo '<script>window.location.href="'.home_url('/login/').'"</script>';
+    exit;
+        } 
+global $post;
+
+$porudctId=  isset($_GET['pid']) ? $_GET['pid'] : '';
+if($porudctId)
+{
+ $post_thumbnail_id = get_post_thumbnail_id($porudctId);
+    if ($post_thumbnail_id) 
+    {
+        $post_thumbnail_img = wp_get_attachment_image_src($post_thumbnail_id, 'thumbnail');
+        $thumbimg= $post_thumbnail_img[0];
+    }else{
+      $thumbimg= 'https://mdbootstrap.com/img/Photos/Others/Carousel-thumbs/img%20(121).jpg';
+    }
+
+  $image_gallery = get_post_meta($porudctId,'_product_image_gallery',true);
+  $product_image_gallery = explode(",",$image_gallery);
+  //print_r($product_image_gallery);
+
+}else{
+  $thumbimg= 'https://mdbootstrap.com/img/Photos/Others/Carousel-thumbs/img%20(121).jpg';
+}
+
+ $attr_for_gall = get_post_meta($porudctId,'_product_attributes',true);
+ $imageAPiURl= "https://image.icarefurnishers.com/api/Image/Getimage?sku=demo&";
+?>
+
+	<div id="primary" class="content-area container">
+		<main id="main" class="site-main" role="main">
+        <div class="pr-customize-page">
+            <div class="row">
+                <div class="col-sm-12">
+        		<h2><?=get_the_title($porudctId);?></h2>
+          
+                <!--Carousel Wrapper-->
+                <div class="slider-container">
+                    <div id="slider" class="slider owl-carousel">
+                    <div class="item">
+                    <div class="content">
+                    <img id="slidermain_img" src="<?=$thumbimg?>" class="img-responsive">
+                    </div>
+                    </div>
+                    </div>
+                </div>
+            
+                    <!--/.Carousel Wrapper-->
+                  <div class="thumbnail-slider-container">
+                  <div id="thumbnailSlider" class="thumbnail-slider owl-carousel">
+                    <?php
+
+                     foreach ($attr_for_gall as $key => $value)
+                      {# code...
+                                   
+                          // Query arguments.
+                          $args = array();
+                          //$result = wc_get_product_terms($product_id, $taxonomy, $args); 
+                          $pterms = wc_get_product_terms($porudctId, $key, $args);
+                          //print_r($pterms);
+                          $generated_image="";
+                            foreach ($pterms as $key1 => $term)
+                            {
+                            # code...
+
+                              // Get term by name ''news'' in Tags taxonomy.
+                              $tag = get_term_by('slug', $term->slug, $key);
+                              // print_r($tag);
+                              $term_id = $tag->term_id;
+
+                              // Generate Image using API 
+                              $generated_image = $imageAPiURl.$key.'='.$term->slug;
+                              ?>
+                             <div class="item">
+                              <div class="content">
+                                    <img  src="<?=$generated_image?>" class="img-responsive"/>
+                              </div>
+                          </div>
+                    <?php
+                      } // end pterms
+                    }// end attr_for_gall
+
+                    if($image_gallery)
+                    {
+                    foreach ($product_image_gallery as $key => $galvalue) 
+                    {
+                      # code...
+                      $thumbimg="";
+                      $post_thumbnail_img = wp_get_attachment_image_src($galvalue, 'thumbnail');
+                      $thumbimg= $post_thumbnail_img[0];
+                    
+                    ?>
+
+                  <!-- <div class="item">
+                      <div class="content">
+                            <img src="<?=$thumbimg?>" class="img-responsive">
+                      </div>
+                  </div> -->
+                  <?php }
+                    } ?>
+                  
+                  </div>
+                  </div>
+
+                <!--/.Carousel Wrapper end-->
+                </div>
+            </div>
+        
+			<?php
+    
+			while ( have_posts() ) : the_post();
+
+        
+          $frm=0;
+          $attr = get_post_meta($porudctId,'_product_attributes',true);
+          if(count( $attr)>0 && $porudctId!="")
+          {
+            //print_r($attr);
+            ?>
+            <div class="col-sm-12">
+               <div class="row">
+            <div class="col-sm-3">
+            	<h3>Options</h3>
+                <div class="lt-option">
+                	<?php
+
+                      // $attrname='pa_size';
+                        //$estado_values = get_the_terms( $porudctId,$attrname);
+                       // print_r($estado_values);
+                       dkcw_woo_attribute($porudctId);
+                    ?>
+                </div>
+            </div>
+           
+            <div class="col-sm-9">
+              <div class="framing-option-outer">
+                <div class="pricessect">
+                  <!-- <h2 style="text-align:center" id="mce_0">Options</h2> -->
+                  <div class="framing-slider">
+                    <div>
+     
+    <form name="cst_getproduct" id="cst_getproduct" action="" method="post">
+      <input type="hidden" name="product_id" value="<?=$porudctId?>">
+      <input type="hidden" name="product_price" value="100">
+      <?php
+            
+          $termlist ='<div class="option-size-clr"><ul class="row">';
+          foreach ($attr as $key => $value)
+          {# code...
+           
+              $termlist .='<a name="'.$key.'">&nbsp;</a><h3 class="title-color">'.ucwords(str_replace("pa_"," ",$key)).'</h3><br>';
+              // Query arguments.
+              $args = array();
+              //$result = wc_get_product_terms($product_id, $taxonomy, $args); 
+              $pterms = wc_get_product_terms($porudctId, $key, $args);
+              //print_r($pterms);
+              $generated_image ="";
+                foreach ($pterms as $key1 => $term)
+                {
+                # code...
+
+                  // Get term by name ''news'' in Tags taxonomy.
+                  $tag = get_term_by('slug', $term->slug, $key);
+                  // print_r($tag);
+                  $term_id = $tag->term_id;
+                  $allTermImg="";
+                  $term_image = get_term_meta( $term_id, 'color_image', true);
+                  $term_image_src = wp_get_attachment_image_src($term_image, 'thumbnail' );
+                  //$term_image_src[0]
+                  
+                  // Generate Image using API 
+                  $generated_image = $imageAPiURl.$key.'='.$term->slug;
+
+                  $termlist .='<li class="col-sm-3" id="term_id'.$term->term_id.'">';
+
+                  $termlist .='<img id="frameimage'.$term_id.'" src="'.$generated_image.'" alt="'.$term->slug.'" />';
+                  /*<a class="previewFramImg" id="'.$term_id.'" href="javascript:void(0)"><i class="fa fa-eye" aria-hidden="true"></i></a>*/
+
+                $termlist .='<input type="checkbox" name="product_attr['.trim($key).'][]" class="term_list" id="term_list'.$term->term_id.'"  value="'.$term->slug.'" />'.ucwords(str_replace("_"," ",$term->name)).'</li>';
+                }
+          }
+
+          $termlist .='</ul> </div>';
+          echo $termlist;
+      
+              ?>
+              <button name="cst_getproduct_data" id="cst_getproduct_data" class="btn btn-primary">Get Data</button>
+              <button name="cst_addtocart_data" id="cst_addtocart_data" class="btn btn-primary">Add To Cart</button>
+              <span id="Viewaddtocart_data"></span>
+              <!-- <input type="submit" name="submit" value="Get"> -->
+
+    </form>
+    <?php }//end if
+            else{
+              echo '<h3>Please select <a style="color:blue" href="shop">Product</a>..</h3>';
+              
+            } ?>
+
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          </div>
+           <?php
+
+          
+
+			endwhile; // End of the loop.
+			?>
+            </div>
+		</main><!-- #main -->
+	</div><!-- #primary -->
+	
+</div>
+<style type="text/css">
+.pr-customize-page{position: relative;}
+.pr-customize-page .slider-container{position: relative;display: block;width: 100%;margin: 0 auto;}
+.pr-customize-page .slider .content{width: 100%;height: auto;margin: 0 auto;}
+#slidermain_img {width: 100%;height: auto;}
+.pr-customize-page .thumbnail-slider-container{margin-top: 5px;width: 700px;margin: 0 auto;}
+.pr-customize-page .thumbnail-slider .content{padding:5px;}
+.pr-customize-page .thumbnail-slider .owl-item.active.center{border: 3px solid #333333;}
+.pr-customize-page .owl-nav {font-size: 55px;}
+.pr-customize-page .owl-nav .owl-prev {position: absolute; top: 7px; left: -25px;}
+.pr-customize-page .owl-nav .owl-next {position: absolute; top: 7px; right: -25px;}
+.pr-customize-page .owl-nav button:focus {outline: 0px;}
+.pr-customize-page .lt-option ul{margin-top: 0px; padding: 0px; list-style: none; min-height: 410px; background: #b3a59a;}
+/*.pr-customize-page .lt-option ul li:last-child a {border-bottom: 0px;}*/
+.pr-customize-page .lt-option ul li a{background: #b3a59a; color: #fff; width: 100%; display: inline-block; padding: 7px 15px 5px; transition: 0.4s ease all;border-bottom: #9a8b7f 1px dashed;}
+.pr-customize-page .lt-option ul li a:hover {background: #8c7c70; color: #fff;}
+.pr-customize-page .option-size-clr ul {list-style: none;}
+.pr-customize-page .title-color {float: left; width: 100%;}
+.pr-customize-page .btn-primary {background: #80756e; color: #ffffff; margin: 0px 5px; border: 2px solid #80756e; padding: 5px 20px; border-radius: 4px; font-size: 14px;}
+.pr-customize-page .btn-primary:hover {background: #6b615a;}
+</style>
+<?php
+get_footer();
+?>
+
+<!--Latest jQuery-->
+<script type="text/javascript" src="http://demo.nstechframe.com/assets/js/jquery-2.2.0.min.js"></script>
+<script type="text/javascript">
+jQuery(document).ready(function () 
+{
+    jQuery.noConflict();
+    // reference for main items
+    var slider = $('#slider');
+    // reference for thumbnail items
+    var thumbnailSlider = $('#thumbnailSlider');
+    //transition time in ms
+    var duration = 550;
+    // carousel function for main slider
+slider.owlCarousel({
+            loop:true,
+            nav:false,
+            items:1
+            });
+
+// carousel function for thumbnail slider
+thumbnailSlider.owlCarousel({
+      loop:true,
+      center:true, //to display the thumbnail item in center
+      nav:true,
+      responsive:{
+                0:{
+                items:3
+                },
+                600:{
+                items:4
+                },
+                1000:{
+                items:5
+                }
+          }
+}).on('click', '.owl-item img', function () 
+{
+// On click of thumbnail items to trigger same main item
+//slider.trigger('to.owl.carousel', [$(this).index(), duration, true]);
+var src = jQuery(this).attr('src');
+//alert(src);
+jQuery("#slider img").attr('src',src);
+
+});
+
+
+});
+</script>
